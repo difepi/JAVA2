@@ -29,6 +29,7 @@ public class Robot implements Player {
             System.out.println("Робот " + this.name + " с легкостью  перепрыгнул стену "
                     + wall.getHeight() + " метров.");
         } else {
+
             System.out.println(this.name + "  не может перепрыгнуть стену " + wall.getHeight() +
                     " метров.");
         }

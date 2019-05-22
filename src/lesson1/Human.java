@@ -2,6 +2,7 @@ package lesson1;
 
 public class Human implements Player {
     private String name;
+
     private int endurance;
     private int heightjump;
 
