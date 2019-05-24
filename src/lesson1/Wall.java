@@ -1,6 +1,7 @@
 package lesson1;
 
 public class Wall extends Obstacles {
+
     private int height;
 
 
