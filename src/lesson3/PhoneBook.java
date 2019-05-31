@@ -1,26 +1,28 @@
 package lesson3;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PhoneBook {
-    private HashMap<String, String> phonebook = new HashMap<>();
+    private HashMap<String, Set<String>> phonebook = new HashMap<>();
 
-    public PhoneBook() {
-
-    }
 
     public void add(String name, String phone) {
+
         if (this.phonebook.get(name) == null) {
-            this.phonebook.put(name, phone);
+            Set<String> phoneset = new HashSet<>();
+            phoneset.add(phone);
+            this.phonebook.put(name, phoneset);
         } else {
-            String str = this.phonebook.get(name).concat(" ").concat(phone);
-            this.phonebook.put(name, str);
+            Set<String> phoneset = new HashSet<>(this.phonebook.get(name));
+            phoneset.add(phone);
+            this.phonebook.put(name, phoneset);
         }
 
     }
 
-    public String get (String name){
+    public Set<String> get(String name) {
         return (this.phonebook.get(name));
     }
 
