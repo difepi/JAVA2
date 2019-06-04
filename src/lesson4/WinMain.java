@@ -33,7 +33,6 @@ public class WinMain extends JFrame implements KeyListener {
         setVisible(true);
         message.addKeyListener(this);
         outtext.addKeyListener(this);
-
         sentbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -41,7 +40,6 @@ public class WinMain extends JFrame implements KeyListener {
             }
         });
     }
-
 
     public void setLookAndFeel() {
         try {
@@ -51,10 +49,8 @@ public class WinMain extends JFrame implements KeyListener {
         }
     }
 
-
     @Override
     public void keyTyped(KeyEvent e) {}
-
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
