@@ -8,7 +8,7 @@ public class Handler {
     public Handler(String[][] array) {
         this.array = array;
     }
-    
+
     public int sumArrayString() {
         int summarray = 0;
 
