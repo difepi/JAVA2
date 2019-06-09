@@ -1,5 +1,7 @@
 package lesson5;
 
+import java.util.Arrays;
+
 public class Main {
     static final int size = 10_000_000;
     static final int h = size / 2;
@@ -7,19 +9,22 @@ public class Main {
 
     public static void main(String[] args) {
         float[] arr = new float[size];
+        float[] arr1 = new float[size];
+        float[] arr2 = new float[size];
 
-        noMulti(arr);
-        try {
-            multi(arr);
+        arr1 = Arrays.copyOf(noMulti(arr), size);
+        arr2 = Arrays.copyOf(multi(arr), size);
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (Arrays.equals(arr1, arr2)) {
+            System.out.println("Массивы идентичны");
+        } else {
+            System.out.println("Массивы не идентичны");
         }
 
     }
 
 
-    private static void noMulti(float[] arr) {
+    private static float[] noMulti(float[] arr) {
         for (int i = 0; i < size; i++) {
             arr[i] = 1;
         }
@@ -29,12 +34,14 @@ public class Main {
             arr[i] = (float) (arr[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
 
         }
-        System.out.println("Выполнение в одном потоке " + Double.toString(System.currentTimeMillis() - a));
+        System.out.println("Выполнение в одном потоке: " + Double.toString(System.currentTimeMillis() - a));
+
+        return arr;
 
     }
 
 
-    private static void multi(float[] arr) throws InterruptedException {
+    private static float[] multi(float[] arr) {
         for (int i = 0; i < size; i++) {
             arr[i] = 1;
         }
@@ -55,27 +62,31 @@ public class Main {
             }
         });
 
+
         Thread myThreadyTwo = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < h; i++) {
-                    twoarr[i] = (float) (twoarr[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+                for (int i = h; i < size; i++) {
+                    twoarr[i - h] = (float) (twoarr[i - h] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
 
                 }
-
             }
         });
 
-        myThreadyOne.start();
-        myThreadyOne.join();
-        myThreadyTwo.start();
-        myThreadyTwo.join();
-
-
+        try {
+            myThreadyOne.start();
+            myThreadyOne.join();
+            myThreadyTwo.start();
+            myThreadyTwo.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.arraycopy(onearr, 0, arr, 0, h);
         System.arraycopy(twoarr, 0, arr, h, h);
 
-        System.out.println("Выполнение в двух потоках " + Double.toString(System.currentTimeMillis() - a));
+        System.out.println("Выполнение в двух потоках: " + Double.toString(System.currentTimeMillis() - a));
+
+        return arr;
 
     }
 }
