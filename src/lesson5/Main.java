@@ -72,15 +72,15 @@ public class Main {
                 }
             }
         });
-
         try {
             myThreadyOne.start();
-            myThreadyOne.join();
             myThreadyTwo.start();
             myThreadyTwo.join();
+            myThreadyOne.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         System.arraycopy(onearr, 0, arr, 0, h);
         System.arraycopy(twoarr, 0, arr, h, h);
 
