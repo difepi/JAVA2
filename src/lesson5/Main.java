@@ -3,7 +3,7 @@ package lesson5;
 import java.util.Arrays;
 
 public class Main {
-    static final int size = 10_000_000;
+    static final int size = 10;
     static final int h = size / 2;
 
 
@@ -11,6 +11,8 @@ public class Main {
         float[] arr = new float[size];
         float[] arr1 = new float[size];
         float[] arr2 = new float[size];
+        int i = arr.length;
+
 
         arr1 = Arrays.copyOf(noMulti(arr), size);
         arr2 = Arrays.copyOf(multi(arr), size);
@@ -34,7 +36,8 @@ public class Main {
             arr[i] = (float) (arr[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
 
         }
-        System.out.println("Выполнение в одном потоке: " + Double.toString(System.currentTimeMillis() - a));
+        System.out.println("Выполнение в одном потоке: " + Double.toString((System.currentTimeMillis() - a) / 1000) + "" +
+                " сек.");
 
         return arr;
 
@@ -72,19 +75,20 @@ public class Main {
                 }
             }
         });
-
         try {
             myThreadyOne.start();
-            myThreadyOne.join();
             myThreadyTwo.start();
             myThreadyTwo.join();
+            myThreadyOne.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         System.arraycopy(onearr, 0, arr, 0, h);
         System.arraycopy(twoarr, 0, arr, h, h);
 
-        System.out.println("Выполнение в двух потоках: " + Double.toString(System.currentTimeMillis() - a));
+        System.out.println("Выполнение в двух потоках: " + Double.toString((System.currentTimeMillis() - a) / 1000) + "" +
+                " сек.") ;
 
         return arr;
 
