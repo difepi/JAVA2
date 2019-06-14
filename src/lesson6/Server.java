@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Server {
-
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(8777)) {
             System.out.println("Сервер " + serverSocket.isBound());

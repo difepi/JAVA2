@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Client {
-
-
     public static void main(String[] args) {
         try (Socket socket = new Socket("localhost", 8777)) {
             InputStream inputStream = socket.getInputStream();
