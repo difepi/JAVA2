@@ -32,10 +32,10 @@ public class Server {
 
     private static void closeServer(ServerSocket serverSocket, Socket socket, InputStream inputStream,
                                     OutputStream outputStream, Scanner scanner) throws IOException {
-        serverSocket.close();
-        socket.close();
         inputStream.close();
         outputStream.close();
+        socket.close();
+        serverSocket.close();
         scanner.close();
     }
 
@@ -47,6 +47,7 @@ public class Server {
                 break;
             }
             dataOutputStream.writeUTF(message);
+            dataOutputStream.flush();
         }
     }
 
@@ -58,7 +59,7 @@ public class Server {
                     try {
                         String message = dataInputStream.readUTF();
                         Date date = new Date();
-                        System.out.println("CLIENT [" + date + "] :: " + message);
+                        System.out.println("\nCLIENT [" + date + "] :: " + message);
                     } catch (IOException e) {
                         e.printStackTrace();
                         System.out.println("Соединение с клиентом разорвано. /end -- для закрытия Сервера. ");
