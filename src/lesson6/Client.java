@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Client {
-
-
     public static void main(String[] args) {
         try (Socket socket = new Socket("localhost", 8777)) {
             InputStream inputStream = socket.getInputStream();
@@ -16,7 +14,7 @@ public class Client {
             DataInputStream dataInputStream = new DataInputStream (inputStream);
             Scanner scanner = new Scanner(System.in);
 
-            System.out.println("Клиент активен.");
+            System.out.println("Клиент активен." + socket.getLocalSocketAddress());
             readClient(dataInputStream);
             writeClient(dataOutputStream, scanner);
             closeClient(socket, inputStream, outputStream, scanner);
@@ -43,6 +41,7 @@ public class Client {
                 break;
             }
             dataOutputStream.writeUTF(message);
+            dataOutputStream.flush();;
         }
     }
 
@@ -54,7 +53,7 @@ public class Client {
                    try {
                        String message = dataInputStream.readUTF();
                        Date date = new Date();
-                       System.out.println("SERVER [" + date + "] :: " + message);
+                       System.out.println("\nSERVER [" + date + "] :: " + message);
                    } catch (IOException e) {
 
                        e.printStackTrace();
